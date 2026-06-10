@@ -1,0 +1,30 @@
+# Lead Gen Pipeline — Cron Schedule
+# Install: crontab /root/hermes/leadgen-localbiz/cron/schedule
+
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin:/root/.local/bin
+PY=/root/hermes/leadgen-localbiz/.venv/bin/python3
+BASE=/root/hermes/leadgen-localbiz
+# Load .env into environment for each job
+# Settings auto-loads .env from config/.env
+
+# Stage 1: Scout — daily at 9:00 AM
+0 9 * * * cd $BASE && $PY scripts/scout/find_businesses.py >> logs/scout.log 2>&1
+
+# Stage 2: Evaluate — daily at 9:30 AM
+30 9 * * * cd $BASE && $PY scripts/evaluate/check_websites.py >> logs/evaluate.log 2>&1
+
+# Stage 3: Enrich — daily at 10:00 AM
+0 10 * * * cd $BASE && $PY scripts/enrich/enrich_data.py >> logs/enrich.log 2>&1
+
+# Stage 4+5: Build + Deploy — daily at 12:00 PM
+0 12 * * * cd $BASE && $PY scripts/build/generate_page.py >> logs/build.log 2>&1 && $PY scripts/deploy/push_deploy.py >> logs/deploy.log 2>&1
+
+# Stage 6: Outreach — daily at 3:00 PM
+0 15 * * * cd $BASE && $PY scripts/outreach/send_pitches.py >> logs/outreach.log 2>&1
+
+# Stage 7: Track/Report — daily at 8:00 AM
+0 8 * * * cd $BASE && $PY scripts/track/daily_report.py >> logs/track.log 2>&1
+
+# Clean logs weekly (keep 30 days)
+0 0 * * 0 find $BASE/logs/ -name "*.log" -mtime +30 -delete

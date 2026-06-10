@@ -1,0 +1,10 @@
+node_modules
+vendor
+.env
+*.log
+__pycache__
+.hermes/
+digital-yearbook/
+idx-watcher/
+leadgen-localbiz/
+wedding-invitation/
