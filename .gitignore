@@ -5,8 +5,8 @@ vendor
 __pycache__
 .hermes/
 digital-yearbook/
+members/
+wedding-invitation/
+mentengdutch/
 idx-watcher/
-leadgen-localbiz/
-wedding-invitation/
-wedding-invitation/
 *.zip
