@@ -13,6 +13,7 @@ GITHUB_USER = "lovelymondayz"
 REPO = "BackupHermes"
 SOURCE_DIR = "/root/hermes"
 BACKUP_DIR = "/tmp/backup-workspace"
+REMOTE_FOLDER = "backupHermesDaily"
 RETENTION_DAYS = 30
 GIT_NAME = "Hermes Bot"
 GIT_EMAIL = "hermes-bot@hermes.arjism.com"
@@ -22,6 +23,7 @@ TOKEN_FILE = "/root/.github/pat"
 BKK = timezone(timedelta(hours=7))
 DATE = datetime.now(BKK).strftime("%Y-%m-%d")
 ARCHIVE_NAME = f"backup-{DATE}.zip"
+REMOTE_PATH = f"{REMOTE_FOLDER}/{ARCHIVE_NAME}"
 LOCAL_ZIP = os.path.join(BACKUP_DIR, ARCHIVE_NAME)
 
 log = lambda msg: print(f"[{datetime.now(BKK).strftime('%Y-%m-%d %H:%M:%S')}] {msg}", flush=True)
@@ -72,8 +74,8 @@ def upload_file(path, content_b64, message):
     return False
 
 def list_backups():
-    """List backup files in the repo."""
-    status, data = gh_api("GET", f"/repos/{GITHUB_USER}/{REPO}/contents/")
+    """List backup files in the backup folder."""
+    status, data = gh_api("GET", f"/repos/{GITHUB_USER}/{REPO}/contents/{REMOTE_FOLDER}")
     if status != 200:
         log(f"List failed: {data.get('message', data)}")
         return []
@@ -174,10 +176,10 @@ def main():
     with open(LOCAL_ZIP, 'rb') as f:
         b64 = base64.b64encode(f.read()).decode()
 
-    # Upload
+    # Upload to backupHermesDaily/ folder
     msg = f"backup: {DATE} - {ARCHIVE_NAME} ({size_human})"
-    log(f"Uploading: {ARCHIVE_NAME}")
-    if upload_file(ARCHIVE_NAME, b64, msg):
+    log(f"Uploading: {ARCHIVE_NAME} to {REMOTE_PATH}")
+    if upload_file(REMOTE_PATH, b64, msg):
         log(f"Uploaded: {ARCHIVE_NAME}")
     else:
         log("Upload failed!")
