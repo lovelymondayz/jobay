@@ -1,0 +1,699 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "WiFi Tracker API",
+    "description": "API documentation for WiFi Tracker Backend",
+    "version": "1.0.0",
+    "contact": {
+      "name": "WiFi Tracker Team",
+      "email": "support@wifitracker.co.id"
+    }
+  },
+  "host": "api.arjism.com",
+  "basePath": "/api/v1",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "User Login",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": { "$ref": "#/definitions/LoginRequest" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "schema": { "$ref": "#/definitions/LoginResponse" }
+          },
+          "400": {
+            "description": "Validation failed",
+            "schema": { "$ref": "#/definitions/ErrorResponse" }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": { "$ref": "#/definitions/ErrorResponse" }
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "tags": ["Roles"],
+        "summary": "Get all roles",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": { "$ref": "#/definitions/SuccessResponseRoles" }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Roles"],
+        "summary": "Create a new role",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "role",
+            "schema": { "$ref": "#/definitions/RoleDTO" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": { "$ref": "#/definitions/SuccessResponseRoles" }
+          },
+          "400": {
+            "description": "Validation error",
+            "schema": { "$ref": "#/definitions/ErrorResponse" }
+          }
+        }
+      }
+    },
+    "/roles/{id}": {
+      "get": {
+        "tags": ["Roles"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "integer" }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseRoles" } },
+          "404": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      },
+      "put": {
+        "tags": ["Roles"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "integer" },
+          {
+            "in": "body",
+            "name": "role",
+            "schema": { "$ref": "#/definitions/RoleDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseRoles" } }
+        }
+      },
+      "delete": {
+        "tags": ["Roles"],
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "type": "integer" }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseRoles" } }
+        }
+      }
+    },
+    "/user-devices": {
+      "get": {
+        "tags": ["Devices"],
+        "summary": "Get all user devices",
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseDevices" }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Devices"],
+        "summary": "Create a new device",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "device",
+            "schema": { "$ref": "#/definitions/DeviceDTO" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": { "$ref": "#/definitions/SuccessResponseDevices" }
+          },
+          "400": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      }
+    },
+    "/user-devices/{id}": {
+      "get": {
+        "tags": ["Devices"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/DeviceDTO" } },
+          "404": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      },
+      "put": {
+        "tags": ["Devices"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "device",
+            "schema": { "$ref": "#/definitions/DeviceDTO" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseDevices" }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Devices"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseDevices" }
+          }
+        }
+      }
+    },
+    "/clients": {
+      "get": {
+        "tags": ["Clients"],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseClients" }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "client",
+            "schema": { "$ref": "#/definitions/ClientDTO" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": { "$ref": "#/definitions/SuccessResponseClients" }
+          },
+          "400": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      }
+    },
+    "/clients/{id}": {
+      "get": {
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseClients" }
+          },
+          "404": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      },
+      "put": {
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "client",
+            "schema": { "$ref": "#/definitions/ClientDTO" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseClients" }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Clients"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseClients" }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseUsers" } }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "user",
+            "schema": { "$ref": "#/definitions/UserDTO" }
+          }
+        ],
+        "responses": {
+          "201": { "schema": { "$ref": "#/definitions/SuccessResponseUsers" } },
+          "400": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseUsers" } },
+          "404": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "user",
+            "schema": { "$ref": "#/definitions/UserDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseUsers" } }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseUsers" } }
+        }
+      }
+    },
+    "/aps": {
+      "post": {
+        "tags": ["AccessPoints"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "ap",
+            "schema": { "$ref": "#/definitions/AccessPointDTO" }
+          }
+        ],
+        "responses": {
+          "201": { "schema": { "$ref": "#/definitions/SuccessResponseAPs" } },
+          "400": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      }
+    },
+    "/aps/{id}": {
+      "get": {
+        "tags": ["AccessPoints"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/AccessPointDTO" } },
+          "404": { "schema": { "$ref": "#/definitions/ErrorResponse" } }
+        }
+      },
+      "put": {
+        "tags": ["AccessPoints"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          },
+          {
+            "in": "body",
+            "name": "ap",
+            "schema": { "$ref": "#/definitions/AccessPointDTO" }
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseAPs" } }
+        }
+      },
+      "delete": {
+        "tags": ["AccessPoints"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uuid"
+          }
+        ],
+        "responses": {
+          "200": { "schema": { "$ref": "#/definitions/SuccessResponseAPs" } }
+        }
+      }
+    },
+    "/clients/active": {
+      "get": {
+        "tags": ["UniFi Integration"],
+        "summary": "Get active clients from UniFi",
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseClients" }
+          }
+        }
+      }
+    },
+    "/clients/active/{macAP}": {
+      "get": {
+        "tags": ["UniFi Integration"],
+        "parameters": [
+          { "name": "macAP", "in": "path", "required": true, "type": "string" }
+        ],
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseClients" }
+          }
+        }
+      }
+    },
+    "/devices/active": {
+      "get": {
+        "tags": ["UniFi Integration"],
+        "summary": "Get active devices from UniFi",
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseDevices" }
+          }
+        }
+      }
+    },
+    "/devices": {
+      "get": {
+        "tags": ["UniFi Integration"],
+        "summary": "Get active devices from UniFi",
+        "responses": {
+          "200": {
+            "schema": { "$ref": "#/definitions/SuccessResponseAllAPDevices" }
+          }
+        }
+      }
+    },
+    "/histories": {
+      "get": {
+        "tags": ["UniFi Integration"],
+        "summary": "Get all connection histories",
+        "responses": {
+          "200": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": { "type": "boolean" },
+                "message": { "type": "string" },
+                "data": {
+                  "type": "array",
+                  "items": { "$ref": "#/definitions/HistoryDTO" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "LoginRequest": {
+      "type": "object",
+      "required": ["email", "password"],
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "password": { "type": "string", "minLength": 6 }
+      }
+    },
+    "LoginResponse": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "object",
+          "properties": { "token": { "type": "string" } }
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": { "type": "object", "nullable": true }
+      }
+    },
+    "RoleDTO": {
+      "type": "object",
+      "required": ["name", "created_by", "updated_by"],
+      "properties": {
+        "name": { "type": "string" },
+        "created_by": { "type": "string" },
+        "updated_by": { "type": "string" }
+      }
+    },
+    "SuccessResponseRoles": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/RoleDTO" }
+        }
+      }
+    },
+    "AllDeviceDTO": {
+      "type": "object",
+      "required": ["mac", "name", "model", "state"],
+      "properties": {
+        "mac": { "type": "string" },
+        "name": { "type": "string" },
+        "model": { "type": "string" },
+        "state": { "type": "integer" }
+      }
+    },
+    "DeviceDTO": {
+      "type": "object",
+      "required": [
+        "user_id",
+        "name",
+        "mac_address",
+        "device_type",
+        "connected_at",
+        "created_by",
+        "updated_by"
+      ],
+      "properties": {
+        "user_id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "mac_address": { "type": "string" },
+        "device_type": { "type": "string" },
+        "connected_at": { "type": "string" },
+        "is_active": { "type": "integer" },
+        "is_online": { "type": "integer" },
+        "created_by": { "type": "string" },
+        "updated_by": { "type": "string" }
+      }
+    },
+    "SuccessResponseDevices": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/DeviceDTO" }
+        }
+      }
+    },
+    "SuccessResponseAllAPDevices": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/AllDeviceDTO" }
+        }
+      }
+    },
+    "ClientDTO": {
+      "type": "object",
+      "required": ["site_id", "name", "created_by", "updated_by"],
+      "properties": {
+        "site_id": { "type": "string", "format": "uuid" },
+        "name": { "type": "string" },
+        "created_by": { "type": "string" },
+        "updated_by": { "type": "string" }
+      }
+    },
+    "SuccessResponseClients": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ClientDTO" }
+        }
+      }
+    },
+    "UserDTO": {
+      "type": "object",
+      "required": [
+        "name",
+        "email",
+        "password",
+        "role_id",
+        "client_id",
+        "created_by",
+        "updated_by"
+      ],
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "password": { "type": "string", "minLength": 6 },
+        "role_id": { "type": "integer" },
+        "client_id": { "type": "string", "format": "uuid" },
+        "created_by": { "type": "string" },
+        "updated_by": { "type": "string" }
+      }
+    },
+    "SuccessResponseUsers": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/UserDTO" }
+        }
+      }
+    },
+    "AccessPointDTO": {
+      "type": "object",
+      "required": [
+        "client_id",
+        "ssid",
+        "name",
+        "mac_address",
+        "created_by",
+        "updated_by"
+      ],
+      "properties": {
+        "client_id": { "type": "string", "format": "uuid" },
+        "ssid": { "type": "string" },
+        "name": { "type": "string" },
+        "mac_address": { "type": "string" },
+        "created_by": { "type": "string" },
+        "updated_by": { "type": "string" }
+      }
+    },
+    "SuccessResponseAPs": {
+      "type": "object",
+      "properties": {
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "data": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/AccessPointDTO" }
+        }
+      }
+    },
+    "HistoryDTO": {
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "tags": [
+    { "name": "Authentication", "description": "Auth endpoints" },
+    { "name": "Roles", "description": "Role management" },
+    { "name": "Devices", "description": "Device management" },
+    { "name": "Clients", "description": "Client management" },
+    { "name": "Users", "description": "User management" },
+    { "name": "AccessPoints", "description": "Access point management" },
+    {
+      "name": "UniFi Integration",
+      "description": "Endpoints from UniFi integration"
+    }
+  ]
+}

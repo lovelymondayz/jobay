@@ -1,0 +1,17 @@
+services:
+  app:
+    build: .
+    image: be_wifi_tracker:latest
+    container_name: be_wifi_tracker
+    ports:
+      - "8081:8081"
+    environment:
+      - DB_HOST=aws-0-ap-southeast-1.pooler.supabase.com
+      - DB_PORT=5432
+      - DB_USER=postgres.hzwrjkgaurxktpvbyzcw
+      - DB_PASSWORD=@KayaRaya123
+      - DB_NAME=postgres
+      - JWT_SECRET=SECRET
+      - UNIFI_USERNAME=punyaarji
+      - UNIFI_PASSWORD=arji
+    command: /app/main

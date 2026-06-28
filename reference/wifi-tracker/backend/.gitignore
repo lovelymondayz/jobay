@@ -1,0 +1,5 @@
+.env
+.vscode
+.air.toml
+tmp
+drop_Tables.go

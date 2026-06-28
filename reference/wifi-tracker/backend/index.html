@@ -1,0 +1,19 @@
+<script>
+  const socket = new WebSocket("ws://localhost:8081/ws/v1/devices");
+
+  socket.onopen = () => {
+    console.log("[WS] Connected!");
+  };
+
+  socket.onmessage = (event) => {
+    console.log("[WS] Message from server:", JSON.parse(event.data));
+  };
+
+  socket.onerror = (error) => {
+    console.error("[WS] Error:", error);
+  };
+
+  socket.onclose = () => {
+    console.warn("[WS] Connection closed.");
+  };
+</script>

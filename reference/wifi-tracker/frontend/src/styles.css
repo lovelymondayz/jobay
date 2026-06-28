@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+body {
+  @apply m-0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+@theme {
+  --color-*: initial;
+  /* Brand Base Colors */
+  --color-navy: #0d1b2a; /* Deep Navy */
+  --color-gold: #f0c808; /* Rich Gold */
+
+  /* UI Color Roles */
+  --color-background: #0d1b2a; /* Main background */
+  --color-surface: #1b263b; /* Card / container background */
+  --color-foreground: #ffffff; /* Text on dark backgrounds */
+  --color-muted: #8d99ae; /* Muted text or icons */
+
+  /* Primary + Accent */
+  --color-primary: #f0c808; /* Gold (CTA, highlights) */
+  --color-secondary: #3ab7bf; /* Optional cool accent */
+  --color-accent: #ff6f59; /* Warm contrast accent (alerts/buttons) */
+
+  /* Suggest / Info / States */
+  --color-success: #78dcca; /* Success */
+  --color-warning: #ffbe0b; /* Warning */
+  --color-error: #ff4d6d; /* Error */
+  --color-info: #00b4d8; /* Informational messages */
+
+  /* Typography Colors */
+  --color-heading: #ffffff;
+  --color-body: #d9d9d9;
+  --color-link: #f0c808;
+}
+
+@layer components {
+  .starter {
+    @apply h-screen w-screen flex flex-col p-4 lg:w-full;
+  }
+}
