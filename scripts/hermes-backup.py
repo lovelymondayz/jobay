@@ -103,12 +103,22 @@ def create_zip():
     if os.path.exists(LOCAL_ZIP):
         os.remove(LOCAL_ZIP)
 
+    # Skip build artifacts and binaries
+    skip_dirs = {'.git', 'node_modules', '__pycache__', '.venv', 'backupHermesDaily'}
+    skip_files = {'.pyc', '.so', '.so.*'}  # Compiled binaries, shared libs
+
     with zipfile.ZipFile(LOCAL_ZIP, 'w', zipfile.ZIP_DEFLATED) as zf:
         for root, dirs, files in os.walk(SOURCE_DIR):
-            # Skip noise
-            dirs[:] = [d for d in dirs if d not in ('.git', 'node_modules', '__pycache__', '.venv')]
+            dirs[:] = [d for d in dirs if d not in skip_dirs]
             for fname in files:
-                if fname.endswith('.pyc'):
+                # Skip compiled binaries and large build artifacts
+                if any(fname.endswith(ext) for ext in skip_files):
+                    continue
+                # Skip dist directories (frontend builds - reproducible)
+                if '/dist/' in root or root.endswith('/dist'):
+                    continue
+                # Skip Go server binaries
+                if fname == 'server' or fname.endswith('.exe'):
                     continue
                 fpath = os.path.join(root, fname)
                 arcname = os.path.relpath(fpath, SOURCE_DIR)
