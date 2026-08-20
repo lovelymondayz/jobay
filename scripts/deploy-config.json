@@ -74,5 +74,9 @@
   "lovelymondayz/resume-optimizer": {
     "dir": "/root/hermes/resume-optimizer",
     "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/klikku": {
+    "dir": "/root/hermes/klikku",
+    "update_script": "scripts/update.sh"
   }
 }

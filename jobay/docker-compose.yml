@@ -1,0 +1,17 @@
+services:
+  jobay:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jobay
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - DB_PATH=/app/data/jobay.json
+    volumes:
+      - jobay-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  jobay-data:
