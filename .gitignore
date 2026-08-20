@@ -10,3 +10,7 @@ wedding-invitation/
 mentengdutch/
 idx-watcher/
 *.zip
+
+# Separate git repos
+leadgen-localbiz/
+noidk/
