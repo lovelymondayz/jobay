@@ -1,6 +1,38 @@
 {
-  "lovelymondayz/members":              { "dir": "/root/hermes/members",            "update_script": "scripts/update.sh" },
-  "lovelymondayz/internet-storage":     { "dir": "/root/internet-storage",          "update_script": "scripts/update.sh" },
-  "lovelymondayz/wedding-invitation":   { "dir": "/root/hermes/wedding-invitation", "update_script": "scripts/update.sh" },
-  "lovelymondayz/digital-yearbook":     { "dir": "/root/hermes/digital-yearbook",   "update_script": "scripts/update.sh" }
+  "lovelymondayz/members": {
+    "dir": "/root/hermes/members",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/wedding-invitation": {
+    "dir": "/root/hermes/wedding-invitation",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/digital-yearbook": {
+    "dir": "/root/hermes/digital-yearbook",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/noidk": {
+    "dir": "/root/hermes/noidk",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/mentengdutch": {
+    "dir": "/root/hermes/mentengdutch",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/pico": {
+    "dir": "/root/pico",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/qlio-platform": {
+    "dir": "/root/qlio-platform",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/say-less": {
+    "dir": "/root/say-less",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/internet-storage": {
+    "dir": "/root/internet-storage",
+    "update_script": "scripts/update.sh"
+  }
 }

@@ -1,0 +1,6 @@
+{
+  "lovelymondayz/members":              { "dir": "/root/hermes/members",            "update_script": "scripts/update.sh" },
+  "lovelymondayz/internet-storage":     { "dir": "/root/internet-storage",          "update_script": "scripts/update.sh" },
+  "lovelymondayz/wedding-invitation":   { "dir": "/root/hermes/wedding-invitation", "update_script": "scripts/update.sh" },
+  "lovelymondayz/digital-yearbook":     { "dir": "/root/hermes/digital-yearbook",   "update_script": "scripts/update.sh" }
+}
