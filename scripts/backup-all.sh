@@ -27,9 +27,23 @@ STACKS=(
   "yearbook-db:yearbook:yearbook:/root/hermes/digital-yearbook"
   "members-db:members:members:/root/hermes/members"
   "noidk-db:noidk:noidk:/root/hermes/noidk"
-  "qlio-db:qlio:qlio:/root/qlio-platform"
-  "sayless-db:postgres:sayless:/root/say-less"
-  "pico-postgres:pico:pico:/root/pico"
+  "qlio-db:qlio:qlio:/root/hermes/qlio-platform"
+  "sayless-db:postgres:sayless:/root/hermes/say-less"
+  "pico-postgres:pico:pico:/root/hermes/pico"
+)
+
+# SQLite-based services (new revenue pipeline)
+SQLITE_SERVICES=(
+  "/root/hermes/lead-lists"
+  "/root/hermes/content-packages"
+  "/root/hermes/web-audits"
+  "/root/hermes/email-sequences"
+  "/root/hermes/competitor-intel"
+  "/root/hermes/chatbot-deploy"
+  "/root/hermes/content-calendars"
+  "/root/hermes/invoice-extract"
+  "/root/hermes/local-seo"
+  "/root/hermes/resume-optimizer"
 )
 
 # Config-only projects (no database of their own)
@@ -149,6 +163,11 @@ for entry in "${STACKS[@]}"; do
   CONFIG_ONLY+=("$pdir")
 done
 
+# Also backup .env files for SQLite services
+for pdir in "${SQLITE_SERVICES[@]}"; do
+  CONFIG_ONLY+=("$pdir")
+done
+
 for pdir in "${CONFIG_ONLY[@]}"; do
   [ -d "$pdir" ] || continue
   n=$(basename "$pdir")
@@ -158,6 +177,29 @@ for pdir in "${CONFIG_ONLY[@]}"; do
   done
 done
 log "config captured for $(ls -1 "$OUT/config" | wc -l) projects"
+
+# ---------- SQLite databases (new revenue pipeline) ----------
+for pdir in "${SQLITE_SERVICES[@]}"; do
+  [ -d "$pdir" ] || continue
+  n=$(basename "$pdir")
+  mkdir -p "$OUT/databases"
+  db="$pdir/data/$n.db"
+  if [ -f "$db" ]; then
+    f="$OUT/databases/${n}.sql.gz"
+    if sqlite3 "$db" .dump 2>/dev/null | gzip -9 > "$f"; then
+      sz=$(stat -c%s "$f" 2>/dev/null || echo 0)
+      if [ "$sz" -lt 50 ]; then
+        log "FAIL $n SQLite dump empty (${sz}B)"; rm -f "$f"; FAIL=$((FAIL+1))
+      else
+        log "OK   $n SQLite ($(numfmt --to=iec "$sz" 2>/dev/null || echo "${sz}B"))"; OK=$((OK+1))
+      fi
+    else
+      log "FAIL $n sqlite3 dump error"; rm -f "$f"; FAIL=$((FAIL+1))
+    fi
+  else
+    log "SKIP $n (no data/${n}.db file)"; SKIP=$((SKIP+1))
+  fi
+done
 
 # ---------- manifest ----------
 {

@@ -36,10 +36,10 @@ declare -A PROJECTS=(
   ["members"]="/root/hermes/members"
   ["noidk"]="/root/hermes/noidk"
   ["mentengdutch"]="/root/hermes/mentengdutch"
-  ["pico"]="/root/pico"
-  ["qlio-platform"]="/root/qlio-platform"
-  ["say-less"]="/root/say-less"
-  ["internet-storage"]="/root/internet-storage"
+  ["pico"]="/root/hermes/pico"
+  ["qlio-platform"]="/root/hermes/qlio-platform"
+  ["say-less"]="/root/hermes/say-less"
+  ["internet-storage"]="/root/hermes/internet-storage"
   ["immich"]="/root/immich"
 )
 

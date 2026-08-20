@@ -97,14 +97,14 @@ check_project() {
 # Main
 check_project "digital-yearbook" "/root/hermes/digital-yearbook"
 check_project "immich" "/root/immich"
-check_project "internet-storage" "/root/internet-storage"
+check_project "internet-storage" "/root/hermes/internet-storage"
 check_project "leadgen-localbiz" "/root/hermes/leadgen-localbiz"
 check_project "members" "/root/hermes/members"
 check_project "mentengdutch" "/root/hermes/mentengdutch"
 check_project "noidk" "/root/hermes/noidk"
-check_project "pico" "/root/pico"
-check_project "qlio-platform" "/root/qlio-platform"
-check_project "say-less" "/root/say-less"
+check_project "pico" "/root/hermes/pico"
+check_project "qlio-platform" "/root/hermes/qlio-platform"
+check_project "say-less" "/root/hermes/say-less"
 check_project "wedding-invitation" "/root/hermes/wedding-invitation"
 
 echo ""

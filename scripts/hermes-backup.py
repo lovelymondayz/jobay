@@ -14,6 +14,7 @@ REPO = "BackupHermes"
 SOURCE_DIR = "/root/hermes"
 BACKUP_DIR = "/tmp/backup-workspace"
 REMOTE_FOLDER = "backupHermesDaily"
+# Note: All projects now live under /root/hermes/ (pico, qlio, say-less, internet-storage moved here)
 RETENTION_DAYS = 30
 GIT_NAME = "Hermes Bot"
 GIT_EMAIL = "hermes-bot@hermes.arjism.com"

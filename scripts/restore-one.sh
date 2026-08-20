@@ -22,8 +22,23 @@ MAP=(
   "pico:pico-postgres:pico:pico"
 )
 
+# SQLite services (new revenue pipeline)
+SQLITE_PROJECTS=(
+  "lead-lists"
+  "content-packages"
+  "web-audits"
+  "email-sequences"
+  "competitor-intel"
+  "chatbot-deploy"
+  "content-calendars"
+  "invoice-extract"
+  "local-seo"
+  "resume-optimizer"
+)
+
 if [ "${1:-}" = "--list" ] || [ $# -eq 0 ]; then
   echo "Projects: wedding yearbook members noidk qlio sayless pico"
+  echo "SQLite:   lead-lists content-packages web-audits email-sequences competitor-intel chatbot-deploy content-calendars invoice-extract local-seo resume-optimizer"
   echo
   echo "Available backups:"
   ls -1dt "$BACKUP_ROOT"/*/ 2>/dev/null | head -20 | while read -r d; do
@@ -31,6 +46,55 @@ if [ "${1:-}" = "--list" ] || [ $# -eq 0 ]; then
       "$(du -sh "$d" 2>/dev/null | cut -f1)" \
       "$(ls -1 "$d/databases" 2>/dev/null | sed 's/\.sql\.gz//' | tr '\n' ' ')"
   done
+  exit 0
+fi
+
+# Check if it's a SQLite project
+SQLITE_NAME=""
+for sp in "${SQLITE_PROJECTS[@]}"; do
+  [ "$sp" = "$1" ] && SQLITE_NAME="$1"
+done
+
+if [ -n "$SQLITE_NAME" ]; then
+  # SQLite restore
+  STAMP="${2:-}"
+  if [ -n "$STAMP" ]; then
+    SRC="$BACKUP_ROOT/$STAMP/databases/${SQLITE_NAME}.sql.gz"
+  else
+    SRC=$(ls -1t "$BACKUP_ROOT"/*/databases/"${SQLITE_NAME}".sql.gz 2>/dev/null | head -1)
+  fi
+  [ -f "$SRC" ] || { echo "No backup found for $SQLITE_NAME."; exit 1; }
+
+  PDIR="/root/hermes/$SQLITE_NAME"
+  DB="$PDIR/data/${SQLITE_NAME}.db"
+  [ -d "$PDIR" ] || { echo "Project dir $PDIR not found."; exit 1; }
+
+  echo "Project   : $SQLITE_NAME (SQLite)"
+  echo "Backup    : $SRC"
+  echo "            $(du -h "$SRC" | cut -f1), $(date -r "$SRC" '+%F %T')"
+  echo
+  echo "This REPLACES the current $SQLITE_NAME database."
+  printf "Type RESTORE to continue: "
+  read -r confirm
+  [ "$confirm" = "RESTORE" ] || { echo "Aborted."; exit 1; }
+
+  SAFETY="$BACKUP_ROOT/pre-restore_${SQLITE_NAME}_$(date +%Y%m%d_%H%M%S).sql.gz"
+  mkdir -p "$BACKUP_ROOT"
+  echo "→ safety dump of current state: $SAFETY"
+  sqlite3 "$DB" .dump 2>/dev/null | gzip -9 > "$SAFETY"
+  echo "  $(du -h "$SAFETY" | cut -f1)"
+
+  echo "→ restoring…"
+  # Drop all tables first
+  sqlite3 "$DB" "SELECT 'DROP TABLE ' || name || ';' FROM sqlite_master WHERE type='table';" 2>/dev/null | sqlite3 "$DB" 2>/dev/null
+  zcat "$SRC" | sqlite3 "$DB" 2>/tmp/hermes_restore_$SQLITE_NAME.log
+  echo "  tables now: $(sqlite3 "$DB" "SELECT COUNT(*) FROM sqlite_master WHERE type='table';" 2>/dev/null)"
+
+  echo
+  echo "→ recreating the app container for a clean state"
+  ( cd "$PDIR" && docker compose up -d --force-recreate 2>&1 | tail -4 )
+  echo
+  echo "Done. Safety dump kept at: $SAFETY"
   exit 0
 fi
 

@@ -20,19 +20,59 @@
     "update_script": "scripts/update.sh"
   },
   "lovelymondayz/pico": {
-    "dir": "/root/pico",
+    "dir": "/root/hermes/pico",
     "update_script": "scripts/update.sh"
   },
   "lovelymondayz/qlio-platform": {
-    "dir": "/root/qlio-platform",
+    "dir": "/root/hermes/qlio-platform",
     "update_script": "scripts/update.sh"
   },
   "lovelymondayz/say-less": {
-    "dir": "/root/say-less",
+    "dir": "/root/hermes/say-less",
     "update_script": "scripts/update.sh"
   },
   "lovelymondayz/internet-storage": {
-    "dir": "/root/internet-storage",
+    "dir": "/root/hermes/internet-storage",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/lead-lists": {
+    "dir": "/root/hermes/lead-lists",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/content-packages": {
+    "dir": "/root/hermes/content-packages",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/web-audits": {
+    "dir": "/root/hermes/web-audits",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/email-sequences": {
+    "dir": "/root/hermes/email-sequences",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/competitor-intel": {
+    "dir": "/root/hermes/competitor-intel",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/chatbot-deploy": {
+    "dir": "/root/hermes/chatbot-deploy",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/content-calendars": {
+    "dir": "/root/hermes/content-calendars",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/invoice-extract": {
+    "dir": "/root/hermes/invoice-extract",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/local-seo": {
+    "dir": "/root/hermes/local-seo",
+    "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/resume-optimizer": {
+    "dir": "/root/hermes/resume-optimizer",
     "update_script": "scripts/update.sh"
   }
 }
