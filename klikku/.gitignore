@@ -11,6 +11,9 @@ build/
 *.so
 *.dylib
 
+# Go binary
+server
+
 # IDE
 .idea/
 .vscode/
