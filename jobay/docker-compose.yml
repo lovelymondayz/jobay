@@ -12,6 +12,7 @@ services:
       - UPLOADS_DIR=/app/data/cvs
       - AI_BASE_URL=https://9router.nousresearch.com/v1
       - AI_MODEL=poolside/laguna-m.1:free
+      - FIRECRAWL_API_KEY=fc-58316613a6a452575666905d76ed9ad0
     volumes:
       - jobay-data:/app/data
     restart: unless-stopped
