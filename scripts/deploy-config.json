@@ -78,5 +78,9 @@
   "lovelymondayz/klikku": {
     "dir": "/root/hermes/klikku",
     "update_script": "scripts/update.sh"
+  },
+  "lovelymondayz/jobay": {
+    "dir": "/root/hermes/jobay",
+    "update_script": "scripts/update.sh"
   }
 }

@@ -5,10 +5,13 @@ services:
       dockerfile: Dockerfile
     container_name: jobay
     ports:
-      - "3001:3001"
+      - "3010:8080"
     environment:
-      - PORT=3001
+      - PORT=8080
       - DB_PATH=/app/data/jobay.json
+      - UPLOADS_DIR=/app/data/cvs
+      - AI_BASE_URL=https://9router.nousresearch.com/v1
+      - AI_MODEL=poolside/laguna-m.1:free
     volumes:
       - jobay-data:/app/data
     restart: unless-stopped

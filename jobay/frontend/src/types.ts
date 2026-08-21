@@ -11,6 +11,10 @@ export interface Job {
   applied_at?: string;
   outcome?: string;
   notes?: string;
+  location?: string;
+  source?: string;
+  apply_status?: string;
+  match_reasons?: string;
   created_at: string;
 }
 
